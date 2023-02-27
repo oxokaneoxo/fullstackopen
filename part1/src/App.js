@@ -13,16 +13,19 @@ const Content = (props) => {
   )
 }
 const Part = (props) => {
-  console.log(props)
+  const { name, exercises } = props.part[0];
+ 
   return (
     <p>
-      {props.part[0].name + " " + props.part[0].exercises}
+      {name} {exercises}
     </p>
   )
 }
 const Total = (props) => {
+  const { exercises } = props.parts[0];
+
   return (
-    <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
+    <p>Number of exercises {exercises + exercises + exercises}</p>
   )
 
 }
