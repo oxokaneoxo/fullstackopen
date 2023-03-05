@@ -10,6 +10,8 @@ const Part = ({ id, name, exercise }) => {
 }
 
 const Course = ({ course }) => {
+    
+    const total = course.parts.reduce((sum, part) => sum + part.exercises, 0)
 
     return (
         <div>
@@ -19,6 +21,7 @@ const Course = ({ course }) => {
                     <Part key={part.id} name={part.name} exercise={part.exercises} />
                 )}
             </ul>
+            <h2>total of {total}</h2>
         </div>
     )
 }
