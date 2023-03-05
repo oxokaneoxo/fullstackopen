@@ -3,24 +3,28 @@ import './app.css';
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', id: "Arto Hellas1" }
+    { name: 'Arto Hellas', id: "Arto Hellas" }
   ])
   const [newName, setNewName] = useState('')
 
   const handleNameInputChange = (event) => {
     setNewName(event.target.value)
-  }
+  };
 
   const addName = (event) => {
     event.preventDefault();
     const nameObject = {
       name: newName,
-      id: newName + (persons.length + 1)
-    }
+      id: newName
+    };
 
-    setPersons(persons.concat(nameObject));
-    setNewName('');
-  }
+    if (persons.some((e) => e.name === newName)) {
+      alert(`${newName} is already added to the phonebook`)
+    } else {
+      setPersons(persons.concat(nameObject));
+      setNewName('');
+    };
+  };
 
   return (
     <div>
@@ -35,10 +39,10 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-       {persons.map((person) => <li key={person.id}>{person.name}</li>)}
+        {persons.map((person) => <li key={person.id}>{person.name}</li>)}
       </ul>
     </div>
   )
-}
+};
 
 export default App
