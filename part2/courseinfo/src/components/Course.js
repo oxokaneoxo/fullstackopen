@@ -16,7 +16,7 @@ const Course = ({ course }) => {
             <h1>{course.name}</h1>
             <ul>
                 {course.parts.map((part, i) =>
-                    <Part key={part.id} name={part.name} exercise={part.exercise} />
+                    <Part key={part.id} name={part.name} exercise={part.exercises} />
                 )}
             </ul>
         </div>
