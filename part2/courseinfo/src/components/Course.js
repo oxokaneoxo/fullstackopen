@@ -1,4 +1,5 @@
 import React from 'react'
+import './course.css';
 
 const Part = ({ id, name, exercise }) => {
     return (
