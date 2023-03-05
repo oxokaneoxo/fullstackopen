@@ -9,18 +9,12 @@ const Part = ({ id, name, exercise }) => {
     )
 }
 
-const Header = ({ name }) => {
-    return (
-        <h1>{name}</h1>
-    )
-}
-
 const Content = ({ course }) => {
     const total = course.parts.reduce((sum, part) => sum + part.exercises, 0)
 
     return (
         <div>
-            <Header name={course.name} />
+            <h1> {course.name} </h1>
             <ul>
                 {course.parts.map((part, i) =>
                     <Part key={part.id} name={part.name} exercise={part.exercises} />
