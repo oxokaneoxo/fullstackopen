@@ -1,5 +1,5 @@
 import React from 'react'
-import './course.css';
+import './courses.css';
 
 const Part = ({ id, name, exercise }) => {
     return (
@@ -26,7 +26,7 @@ const Content = ({ course }) => {
 
 }
 
-const Course = ({ courses }) => {
+const Courses = ({ courses }) => {
     return (
         <div>
             {courses.map((course, i) => <Content key={course.id} course={course}/> )}
@@ -34,4 +34,4 @@ const Course = ({ courses }) => {
     )
 }
 
-export default Course
+export default Courses
