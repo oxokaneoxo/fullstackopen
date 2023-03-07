@@ -1,6 +1,7 @@
 import React from 'react'
+import personSevice from '../services/personSevice';
 
-const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, setPersons}) => {
+const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, setPersons }) => {
     const handleNameInputChange = (event) => {
         setNewName(event.target.value)
     };
@@ -11,19 +12,26 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
     const addPerson = (event) => {
         event.preventDefault();
         const personObject = {
-          name: newName,
-          id: newName,
-          number: newNumber
+            name: newName,
+            id: newName,
+            number: newNumber
         };
-    
+
         if (persons.some((e) => e.name === newName)) {
-          alert(`${newName} is already added to the phonebook`)
+            alert(`${newName} is already added to the phonebook`)
         } else {
-          setPersons(persons.concat(personObject));
-          setNewName('');
-          setNewNumber('');
+            personSevice
+                .create(personObject)
+                .then(returnedPerson => {
+                    setPersons(persons.concat(returnedPerson))
+                    setNewName('');
+                    setNewNumber('');
+                })
+                .catch(error => {
+                    console.log(error, "unable to add person to database");
+                })
         };
-      };
+    };
 
     return (
         <form>
