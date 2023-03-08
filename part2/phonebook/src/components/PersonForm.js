@@ -18,7 +18,16 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
         };
 
         if (persons.some((e) => e.name === newName)) {
-            alert(`${newName} is already added to the phonebook`)
+            if (window.confirm(`${newName} is already addded to phonebook, replace the old number with a new one?`)) {
+                const changedPerson = { ...personObject, number: newNumber }
+                personSevice
+                    .update(changedPerson.id, changedPerson)
+                    .then((changedPerson) => {
+                        setPersons(persons.map((person) => (person.id !== changedPerson.id ? person : changedPerson)))
+                        setNewName('');
+                        setNewNumber('');
+                    })
+            }
         } else {
             personSevice
                 .create(personObject)
