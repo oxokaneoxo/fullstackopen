@@ -37,10 +37,10 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                         setErrorMessage(
                             `Person ${personObject.name} was unable to be updated! Error code: ${error}`
                         )
+                        setTimeout(() => {
+                            setErrorMessage(null)
+                        }, 5000);
                     })
-                setTimeout(() => {
-                    setErrorMessage(null)
-                }, 5000);
             }
         } else {
             personSevice
