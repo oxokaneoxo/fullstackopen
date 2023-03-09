@@ -20,7 +20,14 @@ const Persons = ({ persons, newFilter, setPersons, setErrorMessage, setNotificat
             setNotificationMessage(null)
           }, 5000);
         })
-        .catch(error => console.log(error, "Was unable to delete from database"))
+        .catch((error) => {
+          setErrorMessage(
+              `Imformation of ${person.name} has already been removed from server`
+          )
+          setTimeout(() => {
+              setErrorMessage(null)
+          }, 5000);
+      })
     }
   }
 
