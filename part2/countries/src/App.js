@@ -1,27 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import countryService from './services/countryService'
+import Filter from './components/Filter';
+import Countries from './components/Countries'
+import Country from './components/Country';
+import './app.css';
+
+const App = () => {
+
+  const [countries, setCountries] = useState([]);
+  const [filter, setFilter] = useState("")
+  const [filteredCountries, setfilteredCountries] = useState([])
+
+  useEffect(() => {
+    countryService
+      .getAllCountries()
+      .then(response => {
+        setCountries(response);
+      })
+  }, []);
 
 
+  const showCountry = (country) => {
+    setFilter(country.name.common)
+  }
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Filter filter={filter} setFilter={setFilter} setfilteredCountries={setfilteredCountries} countries={countries}/>
+      { filteredCountries.length === 1 
+       ? <Country country={filteredCountries[0]} />
+       : <Countries countries={filteredCountries} showCountry={showCountry}/>}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
