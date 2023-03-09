@@ -1,7 +1,7 @@
 import React from 'react'
 import personSevice from '../services/personSevice';
 
-const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, setPersons }) => {
+const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, setPersons, setErrorMessage, setNotificationMessage }) => {
     const handleNameInputChange = (event) => {
         setNewName(event.target.value)
     };
@@ -26,7 +26,21 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                         setPersons(persons.map((person) => (person.id !== changedPerson.id ? person : changedPerson)))
                         setNewName('');
                         setNewNumber('');
+                        setNotificationMessage(
+                            `Person ${personObject.name} was updated`
+                        )
+                        setTimeout(() => {
+                            setNotificationMessage(null)
+                        }, 5000);
                     })
+                    .catch((error) => {
+                        setErrorMessage(
+                            `Person ${personObject.name} was unable to be updated! Error code: ${error}`
+                        )
+                    })
+                setTimeout(() => {
+                    setErrorMessage(null)
+                }, 5000);
             }
         } else {
             personSevice
@@ -35,9 +49,20 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                     setPersons(persons.concat(returnedPerson))
                     setNewName('');
                     setNewNumber('');
+                    setNotificationMessage(
+                        `Person ${personObject.name} was added`
+                    )
+                    setTimeout(() => {
+                        setNotificationMessage(null)
+                    }, 5000);
                 })
-                .catch(error => {
-                    console.log(error, "unable to add person to database");
+                .catch((error) => {
+                    setErrorMessage(
+                        `Person ${personObject} was unable to be added! Error code: ${error}`
+                    )
+                    setTimeout(() => {
+                        setErrorMessage(null)
+                    }, 5000);
                 })
         };
     };

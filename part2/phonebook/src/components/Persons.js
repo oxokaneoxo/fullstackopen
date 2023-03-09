@@ -2,17 +2,23 @@ import React from 'react'
 import personSevice from '../services/personSevice';
 
 
-const Persons = ({ persons, newFilter, setPersons }) => {
+const Persons = ({ persons, newFilter, setPersons, setErrorMessage, setNotificationMessage }) => {
   const personsToShow = newFilter.length <= 0
     ? persons
     : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()))
 
-  const removePerson = (id) => {
-    if (window.confirm("Do you want to delete ", id)) {
+  const removePerson = (person) => {
+    if (window.confirm(`Do you want to delete ${person.name}`)) {
       personSevice
-        .remove(id)
+        .remove(person.id)
         .then(() => {
-          setPersons(persons.filter((person) => person.id !== id))
+          setPersons(persons.filter((p) => p.id !== person.id))
+          setNotificationMessage(
+            `Person ${person.name} was removed`
+          )
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000);
         })
         .catch(error => console.log(error, "Was unable to delete from database"))
     }
@@ -23,7 +29,7 @@ const Persons = ({ persons, newFilter, setPersons }) => {
       {personsToShow.map((person) =>
         <li key={person.id}>
           {person.name} {person.number}
-          <button onClick={() => removePerson(person.id)}>Delete</button>
+          <button onClick={() => removePerson(person)}>Delete</button>
         </li>
       )}
     </ul>
