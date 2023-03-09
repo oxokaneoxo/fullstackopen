@@ -14,6 +14,7 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState(null)
+  
 
   useEffect(() => {
     personSevice
@@ -35,9 +36,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      {notificationMessage !== null
-        ? <Notification notificationMessage={notificationMessage} />
-        : <Notification errorMessage={errorMessage} />}
+      <Notification notificationMessage={notificationMessage} errorMessage={errorMessage} />
       <Filter
         newFilter={newFilter}
         setNewFilter={setNewFilter}
