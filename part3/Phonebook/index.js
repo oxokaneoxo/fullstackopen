@@ -4,20 +4,15 @@ var morgan = require('morgan')
 
 const app = express()
 
-
 app.use(express.json())
 
-morgan.token('postRequest', function (req, res) { 
+morgan.token('postRequest', function (req, res) {
   if (req.method === 'POST') {
-    return(JSON.stringify(req.body));  
-  } 
+    return (JSON.stringify(req.body));
+  }
 })
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postRequest'))
-
-
-
-
 
 let persons = [
   {
@@ -82,31 +77,29 @@ const generateId = () => {
   const maxId = persons.length > 0
     ? Math.max(...persons.map(p => p.id))
     : 0
-  return (maxId +1);
+  return (maxId + 1);
 }
 
 app.post('/api/persons', (request, response) => {
- 
+
   const body = request.body;
 
 
   if (!body.name) {
-    return response.status(400).json({ 
-      error: 'name missing' 
+    return response.status(400).json({
+      error: 'name missing'
     })
   }
   if (!body.number) {
-    return response.status(400).json({ 
-      error: 'number missing' 
+    return response.status(400).json({
+      error: 'number missing'
     })
   }
   if (persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())) {
-    return response.status(409).json({ 
-      error: 'name must be unique' 
+    return response.status(409).json({
+      error: 'name must be unique'
     })
   }
-
-
 
   const person = {
     id: generateId(),
