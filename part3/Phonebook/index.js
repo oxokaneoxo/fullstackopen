@@ -6,6 +6,9 @@ const app = express()
 
 app.use(express.json())
 
+app.use(express.static('build'))
+
+
 morgan.token('postRequest', function (req, res) {
   if (req.method === 'POST') {
     return (JSON.stringify(req.body));
@@ -37,7 +40,7 @@ let persons = [
   },
   {
     "id": 5,
-    "name": "Mary poop",
+    "name": "Mary hoop",
     "number": "39-23-6423122"
   },
   {
@@ -81,9 +84,8 @@ const generateId = () => {
 }
 
 app.post('/api/persons', (request, response) => {
-
   const body = request.body;
-
+  console.log("This is Request.Body", request.body);
 
   if (!body.name) {
     return response.status(400).json({
@@ -111,8 +113,7 @@ app.post('/api/persons', (request, response) => {
   response.json(person)
 })
 
-
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
