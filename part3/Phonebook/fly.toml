@@ -1,6 +1,6 @@
-# fly.toml file generated for delicate-forest-4166 on 2023-03-12T14:55:55-07:00
+# fly.toml file generated for shy-dew-4000 on 2023-03-12T15:16:46-07:00
 
-app = "delicate-forest-4166"
+app = "shy-dew-4000"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "ord"
