@@ -3,15 +3,11 @@ const express = require('express')
 var morgan = require('morgan')
 const cors = require('cors')
 
-
 const app = express()
 
 app.use(express.json())
-
 app.use(express.static('build'))
 app.use(cors())
-
-
 
 morgan.token('postRequest', function (req, res) {
   if (req.method === 'POST') {
@@ -44,12 +40,12 @@ let persons = [
   },
   {
     "id": 5,
-    "name": "Mary hoop",
+    "name": "Backet hoop",
     "number": "39-23-6423122"
   },
   {
     "id": 6,
-    "name": "Mary deck",
+    "name": "Builder Adeck",
     "number": "39-23-6423122"
   }
 ]
