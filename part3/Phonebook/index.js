@@ -15,7 +15,6 @@ morgan.token('postRequest', function (req, res) {
     return (JSON.stringify(req.body));
   }
 })
-
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postRequest'))
 
 let persons = [
@@ -56,7 +55,7 @@ app.delete('/api/persons/:id', (request, response) => {
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
-app.use(unknownEndpoint)
+
 
 app.post('/api/persons', (request, response) => {
   const body = request.body;
@@ -72,12 +71,6 @@ app.post('/api/persons', (request, response) => {
       error: 'number missing'
     })
   }
-  // Can ignore this for now.
-  // if (persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())) {
-  //   return response.status(409).json({
-  //     error: 'name must be unique'
-  //   })
-  // }
 
   const person = new Person({
     name: body.name,
@@ -87,6 +80,21 @@ app.post('/api/persons', (request, response) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  }
+
+  Person.findByIdAndUpdate(request.params.id, person, { new: true })
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
 })
 
 const errorHandler = (error, request, response, next) => {
@@ -99,6 +107,7 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+app.use(unknownEndpoint)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
