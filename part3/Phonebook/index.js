@@ -2,12 +2,11 @@ require('dotenv').config()
 const express = require('express')
 var morgan = require('morgan')
 const cors = require('cors')
+const app = express()
 const Person = require('./models/person')
 
-const app = express()
-
-app.use(express.json())
 app.use(express.static('build'))
+app.use(express.json())
 app.use(cors())
 
 morgan.token('postRequest', function (req, res) {
@@ -17,9 +16,6 @@ morgan.token('postRequest', function (req, res) {
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postRequest'))
 
-let persons = [
-
-]
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then((persons) => {
@@ -27,9 +23,15 @@ app.get('/api/persons', (request, response) => {
   })
 })
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
   let currentDate = new Date
-  response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${currentDate}</p>`)
+  Person.find({})
+    .then(persons => {
+      response.send (
+        `<p>Phonebook has info for ${persons.length} people</p> <p>${currentDate}</p>`
+      )
+    })
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -44,23 +46,16 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
+    .then((result) => {
       response.status(204).end()
     })
-    .catch(error =>next(error))  
+    .catch(error => next(error))  
 })
-
-const unknownEndpoint = (request, response) => {
-  response.status(404).send({ error: 'unknown endpoint' })
-}
-
 
 app.post('/api/persons', (request, response) => {
   const body = request.body;
-  console.log("This is Request.Body", request.body);
-
   if (!body.name) {
     return response.status(400).json({
       error: 'name missing'
@@ -97,6 +92,12 @@ app.put('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+
+app.use(unknownEndpoint)
+
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
@@ -107,7 +108,6 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-app.use(unknownEndpoint)
 app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
