@@ -30,9 +30,9 @@ console.log();
 process.argv.length == 3
     ? Person
         .find({})
-        .then((persons) => {
+        .then((people) => {
             console.log("Phonebook:");
-            persons.forEach((p) => {
+            people.forEach((p) => {
                 console.log(`Name: ${p.name} Number: ${p.number}`);
             });
             mongoose.connection.close();
