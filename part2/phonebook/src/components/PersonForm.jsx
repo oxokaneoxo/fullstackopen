@@ -32,7 +32,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                     })
                     .catch((error) => {
                         setErrorMessage(
-                            `Person ${personObj.name} was unable to be updated! Error code: ${error}`
+                            `${error.response.data.error}`
                         )
                         setTimeout(() => {
                             setErrorMessage(null)
@@ -55,7 +55,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                 })
                 .catch((error) => {
                     setErrorMessage(
-                        `Person ${personObj} was unable to be added! Error code: ${error}`
+                        `${error.response.data.error}`
                     )
                     setTimeout(() => {
                         setErrorMessage(null)
