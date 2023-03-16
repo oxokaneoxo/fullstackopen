@@ -10,24 +10,21 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
     }
 
     const addPerson = (event) => {
-        event.preventDefault();
-        const personObject = {
-            name: newName,
-            id: newName,
-            number: newNumber
-        };
+        event.preventDefault();  
+        const personObj = {name: newName , number: newNumber};
+        const foundPerson = persons.find( person => person.name === newName);
 
         if (persons.some((e) => e.name === newName)) {
             if (window.confirm(`${newName} is already addded to phonebook, replace the old number with a new one?`)) {
-                const changedPerson = { ...personObject, number: newNumber }
+                const changedPerson = {... foundPerson, number: newNumber}
                 personSevice
                     .update(changedPerson.id, changedPerson)
-                    .then((changedPerson) => {
-                        setPersons(persons.map((person) => (person.id !== changedPerson.id ? person : changedPerson)))
+                    .then((returnedPerson) => {
+                        setPersons(persons.map((person) => (person.id !== changedPerson.id ? person : returnedPerson)))
                         setNewName('');
                         setNewNumber('');
                         setNotificationMessage(
-                            `Person ${personObject.name} was updated`
+                            `Person ${personObj.name} was updated`
                         )
                         setTimeout(() => {
                             setNotificationMessage(null)
@@ -35,7 +32,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                     })
                     .catch((error) => {
                         setErrorMessage(
-                            `Person ${personObject.name} was unable to be updated! Error code: ${error}`
+                            `Person ${personObj.name} was unable to be updated! Error code: ${error}`
                         )
                         setTimeout(() => {
                             setErrorMessage(null)
@@ -44,13 +41,13 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
             }
         } else {
             personSevice
-                .create(personObject)
-                .then(returnedPerson => {
-                    setPersons(persons.concat(returnedPerson))
+                .create(personObj)
+                .then(foundPerson => {
+                    setPersons(persons.concat(foundPerson))
                     setNewName('');
                     setNewNumber('');
                     setNotificationMessage(
-                        `Person ${personObject.name} was added`
+                        `Person ${personObj.name} was added`
                     )
                     setTimeout(() => {
                         setNotificationMessage(null)
@@ -58,7 +55,7 @@ const PersonForm = ({ newName, setNewName, newNumber, setNewNumber, persons, set
                 })
                 .catch((error) => {
                     setErrorMessage(
-                        `Person ${personObject} was unable to be added! Error code: ${error}`
+                        `Person ${personObj} was unable to be added! Error code: ${error}`
                     )
                     setTimeout(() => {
                         setErrorMessage(null)
