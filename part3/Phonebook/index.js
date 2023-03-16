@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config()
 const express = require('express')
 var morgan = require('morgan')
@@ -9,9 +10,9 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
 
-morgan.token('postRequest', function (req, res) {
+morgan.token('postRequest', function (req, _res) {
   if (req.method === 'POST') {
-    return (JSON.stringify(req.body));
+    return (JSON.stringify(req.body))
   }
 })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postRequest'))
@@ -59,7 +60,7 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.post('/api/persons', (request, response, next) => {
-  const body = request.body;
+  const body = request.body
   if (!body.name) {
     return response.status(400).json({
       error: 'name missing'
@@ -90,7 +91,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     name: body.name,
     number: body.number,
   }
-  console.log(body);
+  console.log(body)
   Person.findByIdAndUpdate(request.params.id, person, { new: true })
     .then(updatedPerson => {
       response.json(updatedPerson)
