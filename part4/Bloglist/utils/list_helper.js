@@ -9,8 +9,12 @@ const totalLikes = (blogs) => {
 
 const favoriteBlog = (blogs) => {
     if (blogs.length === 0) return null;
-    const result = Math.max(...blogs.map(blog => blog.likes))
-    return result;
+    const result = blogs.reduce((result, blog) => (result.likes > blog.likes ? result : blog))
+    return {
+        title: result.title,
+        author: result.author,
+        likes: result.likes
+    };
 }
 
 module.exports = {
