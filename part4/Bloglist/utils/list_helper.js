@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 const dummy = (blogs) => {
     return 1;
 }
@@ -16,9 +18,32 @@ const favoriteBlog = (blogs) => {
         likes: result.likes
     };
 }
+const mostBlogs = (blogs) => {
+    if (blogs.length === 0) return null;
+
+    var results = _.chain(blogs)
+        .groupBy("author")
+        .map((value, key) => { return { author: key, blogs: value.length } })
+        .value()
+        .reduce((result, blog) => (result.blogs > blog.blogs ? result : blog))
+
+    return results;
+}
+// const mostLiked = (blogs) => {
+//     if (blogs.length === 0) return null;
+
+//     var results = _.chain(blogs)
+//         .groupBy("author")
+//         .map((value, key) => { return { author: key, blogs: value.length } })
+//         .value()
+//         .reduce((result, blog) => (result.blogs > blog.blogs ? result : blog))
+
+//     return results;
+// }
 
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
+    mostBlogs,
 }
