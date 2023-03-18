@@ -23,27 +23,28 @@ const mostBlogs = (blogs) => {
 
     var results = _.chain(blogs)
         .groupBy("author")
-        .map((value, key) => { return { author: key, blogs: value.length } })
+        .map((value, author) => { return { author: author, blogs: value.length } })
         .value()
         .reduce((result, blog) => (result.blogs > blog.blogs ? result : blog))
 
     return results;
 }
-// const mostLiked = (blogs) => {
-//     if (blogs.length === 0) return null;
+const mostLiked = (blogs) => {
+    if (blogs.length === 0) return null;
 
-//     var results = _.chain(blogs)
-//         .groupBy("author")
-//         .map((value, key) => { return { author: key, blogs: value.length } })
-//         .value()
-//         .reduce((result, blog) => (result.blogs > blog.blogs ? result : blog))
-
-//     return results;
-// }
+    var results = _.chain(blogs)
+        .groupBy("author")
+        .map((value, author) => { return { author: author, likes: value.reduce((sum, blog) => sum + blog.likes, 0) } })
+        .reduce((result, blog) => (result.likes > blog.likes ? result : blog))
+        .value()
+        
+    return results;
+}
 
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
     mostBlogs,
+    mostLiked,
 }

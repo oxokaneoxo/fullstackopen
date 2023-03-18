@@ -156,24 +156,24 @@ describe('Most liked', () => {
   })
 })
 
-// describe('Most liked author', () => {
+describe('Most liked author', () => {
 
-//   test("of empty list is zero", () => {
-//     const result = listHelper.mostLiked([])
-//     expect(result).toEqual(null)
-//   })
-//   test('when list has only one blog, equals the likes of that', () => {
-//     const result = listHelper.mostLiked(listWithOneBlog)
-//     expect(result).toEqual({
-//       author: 'Edsger W. Dijkstra',
-//       likes: 5
-//     })
-//   })
-//   test('of a bigger list is calculated right', () => {
-//     const result = listHelper.mostLiked(blogs)
-//     expect(result).toEqual({
-//       author: "Edsger W. Dijkstra",
-//       likes: 17
-//     })
-//   })
-// })
+  // test("of empty list is zero", () => {
+  //   const result = listHelper.mostLiked([])
+  //   expect(result).toEqual(null)
+  // })
+  // test('when list has only one blog, equals the likes of that', () => {
+  //   const result = listHelper.mostLiked(listWithOneBlog)
+  //   expect(result).toEqual({
+  //     author: 'Edsger W. Dijkstra',
+  //     likes: 5
+  //   })
+  // })
+  test('of a bigger list is calculated right', () => {
+    const result = listHelper.mostLiked(blogs)
+    expect(result).toEqual({
+      author: "Edsger W. Dijkstra",
+      likes: 17
+    })
+  })
+})
