@@ -9,13 +9,16 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
 
-    if (!body.title || !body.author || !body.url) {
+    if (!body.title || !body.url) {
         return response.status(400).json({
-            error: 'blog missing a title, author, and/or url'
+            error: 'blog missing a title, and/or url'
         })
     }
     if (!body.likes) {
         body.likes = 0;
+    }
+    if (!body.author) {
+        body.author = 'Unknown'
     }
 
     const blog = new Blog({

@@ -55,7 +55,7 @@ test('Id is defined', async () => {
   expect(ids).toBeDefined()
 }, 100000)
 
-test('Posting a new blog', async () => {
+test('Post a new blog', async () => {
   let blogObject = {
     title: "How to always join the winning team",
     author: "Brad Guga",
@@ -67,15 +67,16 @@ test('Posting a new blog', async () => {
     .send(blogObject)
     .expect(201)
     .expect('Content-Type', /application\/json/)
-  
+
   const response = await api.get('/api/blogs')
   expect(response.body).toHaveLength(3)
   const authors = response.body.map(r => r.author)
   expect(authors).toContain(
     'Brad Guga'
   )
-})
-test('Posting a new blog without the likes property', async () => {
+}, 100000)
+
+test('Post blog without likes property defaults likes to 0', async () => {
   let blogObject = {
     title: "How to get no likes",
     author: "How Test",
@@ -86,14 +87,45 @@ test('Posting a new blog without the likes property', async () => {
     .send(blogObject)
     .expect(201)
     .expect('Content-Type', /application\/json/)
-  
 
   const response = await api.get('/api/blogs')
   const likes = response.body.map(r => r.likes)
   expect(likes).toContain(
     0
   )
-})
+}, 100000)
+
+test('Post blog without Title returns 400 Bad Request', async () => {
+  let blogObject = {
+    author: "Titless Test",
+    url: "notitle.com",
+    likes: 400
+  }
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(2)
+}, 100000)
+
+test('Post blog without URL returns 400 Bad Request', async () => {
+  let blogObject = {
+    title: "How to get no likes",
+    author: "How Test",
+    likes: 16
+  }
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(400)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(2)
+}, 100000)
 
 afterAll(async () => {
   await mongoose.connection.close()
