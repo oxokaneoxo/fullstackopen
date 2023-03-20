@@ -4,8 +4,8 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const blogsRouter = require('./controllers/blogs')
-const mongoose = require('mongoose')
 const http = require('http')
+const mongoose = require('mongoose')
 
 logger.info('connecting to', config.MONGODB_URI)
 
