@@ -55,6 +55,22 @@ test('Id is defined', async () => {
   expect(ids).toBeDefined()
 }, 100000)
 
+test('Posting a new blog', async () => {
+  let blogObject = new Blog({
+    title: "How to always join the winning team",
+    author: "Brad Guga",
+    url: "alwayswinning.com",
+    likes: 7,
+  })
+  await blogObject.save()
+  const response = await api.get('/api/blogs')
+  expect(response.body).toHaveLength(3)
+  const authors = response.body.map(r => r.author)
+  expect(authors).toContain(
+    'Brad Guga'
+  )
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
