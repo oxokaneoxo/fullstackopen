@@ -56,18 +56,42 @@ test('Id is defined', async () => {
 }, 100000)
 
 test('Posting a new blog', async () => {
-  let blogObject = new Blog({
+  let blogObject = {
     title: "How to always join the winning team",
     author: "Brad Guga",
     url: "alwayswinning.com",
     likes: 7,
-  })
-  await blogObject.save()
+  }
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  
   const response = await api.get('/api/blogs')
   expect(response.body).toHaveLength(3)
   const authors = response.body.map(r => r.author)
   expect(authors).toContain(
     'Brad Guga'
+  )
+})
+test('Posting a new blog without the likes property', async () => {
+  let blogObject = {
+    title: "How to get no likes",
+    author: "How Test",
+    url: "likeless.com",
+  }
+  await api
+    .post('/api/blogs')
+    .send(blogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  
+
+  const response = await api.get('/api/blogs')
+  const likes = response.body.map(r => r.likes)
+  expect(likes).toContain(
+    0
   )
 })
 

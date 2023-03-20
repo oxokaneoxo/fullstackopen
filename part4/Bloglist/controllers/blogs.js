@@ -9,10 +9,13 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
 
-    if (!body.title || !body.author || !body.url || !body.likes) {
+    if (!body.title || !body.author || !body.url) {
         return response.status(400).json({
-            error: 'blog missing a title, author, url, and/or likes'
+            error: 'blog missing a title, author, and/or url'
         })
+    }
+    if (!body.likes) {
+        body.likes = 0;
     }
 
     const blog = new Blog({
@@ -24,7 +27,7 @@ blogsRouter.post('/', async (request, response) => {
 
     await blog.save()
         .then(savedBlog => {
-            response.json(savedBlog)
+            response.status(201).json(savedBlog)
         })
         .catch(error => next(error))
 })
