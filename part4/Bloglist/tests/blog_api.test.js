@@ -127,6 +127,41 @@ test('Post blog without URL returns 400 Bad Request', async () => {
   expect(response.body).toHaveLength(2)
 }, 100000)
 
+test('Delete Blog', async () => {
+  const blogsAtStart = await Blog.find({})
+
+  await api
+    .delete(`/api/blogs/${blogsAtStart[0].id}`)
+    .expect(204)
+
+  const blogsAtEnd = await Blog.find({})
+
+  expect(blogsAtStart.length).toBe(2)
+  expect(blogsAtEnd.length).toBe(1)
+})
+
+test('Change likes on Blog', async () => {
+  const blogsAtStart = await Blog.find({})
+
+  expect(blogsAtStart[0].likes).toBe(7)
+
+  let blogObject = {
+    title: blogsAtStart[0].title,
+    author: blogsAtStart[0].author,
+    url: blogsAtStart[0].url,
+    likes: 16
+  }
+
+  await api
+    .put(`/api/blogs/${blogsAtStart[0].id}`)
+    .send(blogObject)
+
+  const blogsAtEnd = await Blog.find({})
+  expect(blogsAtEnd[0].likes).toBe(16)
+})
+
+
+
 afterAll(async () => {
   await mongoose.connection.close()
 })
