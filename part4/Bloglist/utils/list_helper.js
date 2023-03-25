@@ -37,7 +37,7 @@ const mostLiked = (blogs) => {
         .map((value, author) => { return { author: author, likes: value.reduce((sum, blog) => sum + blog.likes, 0) } })
         .reduce((result, blog) => (result.likes > blog.likes ? result : blog))
         .value()
-        
+
     return results;
 }
 
