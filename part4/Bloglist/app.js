@@ -4,6 +4,8 @@ const logger = require('./utils/logger')
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+require('express-async-errors')
+const app = express()
 
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
@@ -20,7 +22,6 @@ mongoose.connect(config.MONGODB_URI)
         logger.error('error connecting to MongoDB', error.message)
     })
 
-const app = express()
 
 app.use(middleware.tokenExtractor)
 

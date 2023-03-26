@@ -1,3 +1,5 @@
+const logger = require('./logger')
+
 const errorHandler = (error, req, res, next) => {
     logger.error(error.message)
 
@@ -6,10 +8,10 @@ const errorHandler = (error, req, res, next) => {
     } else if (error.name === 'ValidationError') {
         return res.status(400).json({ error: error.message })
     } else if (error.name === 'JsonWebTokenError') {
-        return response.status(400).json({ error: error.message })
+        return res.status(400).json({ error: error.message })
     }
 
-    next(error)
+    next()
 }
 
 const tokenExtractor = (req, res, next) => {
