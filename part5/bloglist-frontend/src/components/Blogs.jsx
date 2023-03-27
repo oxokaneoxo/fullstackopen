@@ -1,7 +1,8 @@
 import React from 'react'
 import Blog from '../components/Blog'
+import BlogForm from './BlogForm'
 
-const Blogs = ({ blogs, user }) => {
+const Blogs = ({ blogs, user, setBlogs }) => {
 
   const handleLogout = () => {
     window.localStorage.clear()
@@ -15,6 +16,7 @@ const Blogs = ({ blogs, user }) => {
         {user.name} logged in
         <button type='botton' name='Logout' onClick={() => handleLogout()}>Logout</button>
       </p>
+      <BlogForm blogs={blogs} setBlogs={setBlogs} />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

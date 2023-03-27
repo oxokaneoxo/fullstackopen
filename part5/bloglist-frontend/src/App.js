@@ -50,10 +50,12 @@ const App = () => {
     }
   }
 
+
+
   return (
     <div>
       {user === null && <LoginForm username={username} setUsername={setUsername} password={password} setPassword={setPassword} handleLogin={handleLogin} />}
-      {user !== null && <Blogs blogs={blogs} user={user} />}
+      {user !== null && <Blogs blogs={blogs} user={user} setBlogs={setBlogs} />}
     </div>
   )
 }
