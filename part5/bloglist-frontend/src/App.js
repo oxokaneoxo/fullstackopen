@@ -11,6 +11,7 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -27,35 +28,33 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-
-    try {
-      const user = await loginService.login({
-        username, password,
-      })
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
-
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
-  }
-
 
 
   return (
     <div>
-      {user === null && <LoginForm username={username} setUsername={setUsername} password={password} setPassword={setPassword} handleLogin={handleLogin} />}
-      {user !== null && <Blogs blogs={blogs} user={user} setBlogs={setBlogs} />}
+
+      {user === null &&
+        <LoginForm 
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+          user={user}
+          setUser={setUser}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
+          notificationMessage={notificationMessage}
+          setNotificationMessage={setNotificationMessage}
+        />}
+      {user !== null &&
+        <Blogs
+          blogs={blogs}
+          user={user}
+          setBlogs={setBlogs}
+          notificationMessage={notificationMessage}
+          setNotificationMessage={setNotificationMessage}
+          errorMessage={errorMessage}
+        />}
     </div>
   )
 }
