@@ -1,32 +1,24 @@
 import React from 'react'
 import { useState } from 'react'
-import blogService from '../services/blogs'
 
-const BlogForm = ({ blogs, setBlogs, setNotificationMessage }) => {
+
+const BlogForm = ({ addBlog }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   const handleBlogCreation = (event) => {
     event.preventDefault()
-    const blogObject = {
+    
+    addBlog({
       title: title,
       author: author,
       url: url,
-    }
+    })
 
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
-        setNotificationMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`)
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 3000);
-      })
+    setTitle('')
+    setAuthor('')
+    setUrl('')
   }
 
   return (

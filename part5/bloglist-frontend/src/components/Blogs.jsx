@@ -2,8 +2,9 @@ import React from 'react'
 import Blog from '../components/Blog'
 import BlogForm from './BlogForm'
 import Notification from './Notification'
+import Togglable from './Togglable'
 
-const Blogs = ({ blogs, user, setBlogs, setNotificationMessage, notificationMessage, errorMessage }) => {
+const Blogs = ({ blogFormRef, blogs, user, notificationMessage, errorMessage, addBlog}) => {
 
   const handleLogout = () => {
     window.localStorage.clear()
@@ -13,12 +14,19 @@ const Blogs = ({ blogs, user, setBlogs, setNotificationMessage, notificationMess
   return (
     <div>
       <h2>blogs</h2>
-      <Notification notificationMessage={notificationMessage} errorMessage={errorMessage}/>
+
+      <Notification notificationMessage={notificationMessage} errorMessage={errorMessage} />
+
       <p>
         {user.name} logged in
         <button type='botton' name='Logout' onClick={() => handleLogout()}>Logout</button>
       </p>
-      <BlogForm blogs={blogs} setBlogs={setBlogs} setNotificationMessage={setNotificationMessage}/>
+      <Togglable buttonLabel='new blog' ref={blogFormRef}>
+        <BlogForm
+          addBlog={addBlog}
+        />
+      </Togglable>
+
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
