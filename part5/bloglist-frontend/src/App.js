@@ -70,6 +70,15 @@ const App = () => {
       })
   }
 
+  const addLike = (blogObject) => {
+    console.log(blogObject);
+    blogService
+      .update(blogObject.id, {...blogObject, likes: blogObject.likes + 1})
+      .then(returnedBlog => {
+        setBlogs(blogs.map(blog => blog.id !== blogObject.id ? blog : returnedBlog))
+      })
+  }
+
 
   return (
     <div>
@@ -92,6 +101,7 @@ const App = () => {
           notificationMessage={notificationMessage}
           errorMessage={errorMessage}
           addBlog={addBlog}
+          addLike={addLike}
         />}
     </div>
   )

@@ -4,7 +4,7 @@ import BlogForm from './BlogForm'
 import Notification from './Notification'
 import Togglable from './Togglable'
 
-const Blogs = ({ blogFormRef, blogs, user, notificationMessage, errorMessage, addBlog}) => {
+const Blogs = ({ blogFormRef, blogs, user, notificationMessage, errorMessage, addBlog, addLike }) => {
 
   const handleLogout = () => {
     window.localStorage.clear()
@@ -26,8 +26,9 @@ const Blogs = ({ blogFormRef, blogs, user, notificationMessage, errorMessage, ad
           addBlog={addBlog}
         />
       </Togglable>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} user={user} />
+
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} user={user} addLike={addLike} />
       )}
     </div>
   )

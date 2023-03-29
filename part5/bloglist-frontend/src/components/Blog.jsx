@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './blog.css'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ blog, user, addLike }) => {
   const [detailsVisible, setDetailsVisible] = useState(false)
 
   const hideWhenVisible = { display: detailsVisible ? 'none' : '' }
@@ -17,7 +17,7 @@ const Blog = ({ blog, user }) => {
         {blog.title} by {blog.author}
         <button onClick={() => setDetailsVisible(false)} className='blog_button' >hide</button>
         <p>Url for blog {blog.url}</p>
-        <p>Likes {blog.likes} <button>like</button></p>
+        <p>Likes {blog.likes} <button onClick={() => addLike(blog)}>like</button></p>
         {blog.user.username
           ? <p>Added by {blog.user.username}</p>
           : <p>Added by {user.username}</p>
