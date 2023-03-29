@@ -9,7 +9,7 @@ const BlogForm = ({ addBlog }) => {
 
   const handleBlogCreation = (event) => {
     event.preventDefault()
-    
+     
     addBlog({
       title: title,
       author: author,

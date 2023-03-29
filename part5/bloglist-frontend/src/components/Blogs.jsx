@@ -28,7 +28,7 @@ const Blogs = ({ blogFormRef, blogs, user, notificationMessage, errorMessage, ad
       </Togglable>
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={blog.user} />
       )}
     </div>
   )
