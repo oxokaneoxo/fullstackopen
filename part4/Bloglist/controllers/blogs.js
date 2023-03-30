@@ -44,9 +44,8 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
     const blog = await Blog.findById(request.params.id)
-
     const user = request.user
-
+    
     if (!user || blog.user.toString() !== user.id.toString()) {
         return response.status(401).json({ error: 'operation not permitted' })
     }

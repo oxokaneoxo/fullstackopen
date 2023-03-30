@@ -79,6 +79,20 @@ const App = () => {
       })
   }
 
+  const deleteBlog = (blogObject) => {
+    if (window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}`)) {
+      blogService
+      .remove(blogObject.id)
+      .then(() => {
+        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
+        setNotificationMessage(`Blog ${blogObject.title} by ${blogObject.author} deleted`)
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+    }
+  }
+
 
   return (
     <div>
@@ -102,6 +116,7 @@ const App = () => {
           errorMessage={errorMessage}
           addBlog={addBlog}
           addLike={addLike}
+          deleteBlog={deleteBlog}
         />}
     </div>
   )
