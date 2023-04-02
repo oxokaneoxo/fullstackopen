@@ -48,9 +48,7 @@ test('clicking the button shows url and likes', async () => {
         }
     }
 
-    const mockHandler = jest.fn()
-
-    render(<Blog blog={blog} user={fakeUser} addLike={mockHandler} />)
+    render(<Blog blog={blog} user={fakeUser}/>)
 
     const user = userEvent.setup()
     const button = screen.getByText('view')
