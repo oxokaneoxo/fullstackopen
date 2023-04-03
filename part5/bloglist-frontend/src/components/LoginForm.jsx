@@ -2,8 +2,6 @@ import React from 'react'
 import Notification from './Notification'
 
 const loginForm = ({ handleLogin, username, setUsername, password, setPassword, errorMessage, notificationMessage }) => {
-
-
   return (
     <div>
       <h1>Log in to application</h1>

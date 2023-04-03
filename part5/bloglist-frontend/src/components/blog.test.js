@@ -8,7 +8,6 @@ import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
-
     test('renders content', () => {
         const user = {
             name: "Jest",

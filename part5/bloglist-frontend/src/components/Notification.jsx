@@ -1,7 +1,6 @@
 import React from 'react'
 import './notification.css';
 
-
 const Notification = ({ notificationMessage, errorMessage }) => {
 
     if (notificationMessage === null && errorMessage === null) {

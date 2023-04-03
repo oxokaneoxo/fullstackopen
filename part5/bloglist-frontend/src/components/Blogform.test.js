@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event'
 import BlogForm from './BlogForm'
 
 describe('<BlogForm />', () => {
-
     test('calls event handler with correct details when a new blog is created', async () => {
 
         const blogData = {

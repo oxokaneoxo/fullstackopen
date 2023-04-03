@@ -12,7 +12,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState(null)
 
-
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
@@ -92,7 +91,6 @@ const App = () => {
       })
     }
   }
-
 
   return (
     <div>
