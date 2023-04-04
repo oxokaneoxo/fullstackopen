@@ -2,9 +2,13 @@ module.exports = {
   'env': {
     'commonjs': true,
     'es2021': true,
-    'node': true
+    'node': true,
+    'cypress/globals': true
   },
-  'extends': 'eslint:recommended',
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended'
+],
   'parserOptions': {
     'ecmaVersion': 'latest'
   },
@@ -33,6 +37,7 @@ module.exports = {
     'arrow-spacing': [
       'error', { 'before': true, 'after': true }
     ],
-    'no-console': 0
+    'no-console': 0,
+    'react/prop-types': 0,
   }
 }
