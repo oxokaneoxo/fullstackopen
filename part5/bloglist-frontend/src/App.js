@@ -45,7 +45,7 @@ const App = () => {
       setNotificationMessage(`${user.name} logged in`)
       setTimeout(() => {
         setNotificationMessage(null)
-      }, 3000);
+      }, 3000)
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
@@ -70,9 +70,9 @@ const App = () => {
   }
 
   const addLike = (blogObject) => {
-    console.log(blogObject);
+    console.log(blogObject)
     blogService
-      .update(blogObject.id, {...blogObject, likes: blogObject.likes + 1})
+      .update(blogObject.id, { ...blogObject, likes: blogObject.likes + 1 })
       .then(returnedBlog => {
         setBlogs(blogs.map(blog => blog.id !== blogObject.id ? blog : returnedBlog))
       })
@@ -81,14 +81,14 @@ const App = () => {
   const deleteBlog = (blogObject) => {
     if (window.confirm(`Remove blog ${blogObject.title} by ${blogObject.author}`)) {
       blogService
-      .remove(blogObject.id)
-      .then(() => {
-        setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
-        setNotificationMessage(`Blog ${blogObject.title} by ${blogObject.author} deleted`)
-        setTimeout(() => {
-          setNotificationMessage(null)
-        }, 5000)
-      })
+        .remove(blogObject.id)
+        .then(() => {
+          setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
+          setNotificationMessage(`Blog ${blogObject.title} by ${blogObject.author} deleted`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+        })
     }
   }
 
