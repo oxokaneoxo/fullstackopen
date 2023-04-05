@@ -30,6 +30,7 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={title}
             name="title"
+            id='blog_title'
             placeholder='add title'
             onChange={({ target }) => setTitle(target.value)}
           />
@@ -40,6 +41,7 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={author}
             name="author"
+            id='blog_author'
             placeholder='add author'
             onChange={({ target }) => setAuthor(target.value)}
           />
@@ -50,11 +52,12 @@ const BlogForm = ({ addBlog }) => {
             type="text"
             value={url}
             name="url"
+            id='blog_url'
             placeholder='add url'
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
-        <button data-testid="submit_button" type="submit">submit</button>
+        <button id='blog_submit-button' data-testid="submit_button" type="submit">submit</button>
       </form>
     </div>
   )
