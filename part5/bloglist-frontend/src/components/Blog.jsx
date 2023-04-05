@@ -20,7 +20,7 @@ const Blog = ({ blog, user, addLike, deleteBlog }) => {
         <span> by {blog.author}</span>
         <button onClick={() => setDetailsVisible(false)} className='blog_button' >hide</button>
         <p>Url: {blog.url}</p>
-        <p>Likes: {blog.likes} <button data-testid="like_button" onClick={() => addLike(blog)}>like</button></p>
+        <p>Likes: {blog.likes} <button className='like_button' data-testid="like_button" onClick={() => addLike(blog)}>like</button></p>
         {blog.user.username
           ? <p>Added by {blog.user.username}</p>
           : <p>Added by {user.username}</p>
