@@ -32,6 +32,7 @@ describe('unicafe reducer', () => {
       bad: 0
     })
   })
+  
   test('ok is incremented', () => {
     const action = {
       type: 'OK'
@@ -46,6 +47,7 @@ describe('unicafe reducer', () => {
       bad: 0
     })
   })
+
   test('bad is incremented', () => {
     const action = {
       type: 'BAD'
