@@ -8,9 +8,9 @@ const Notification = () => {
   }
   return (
     <>
-      {notification !== '' &&
+      {notification.message &&
         <div style={style}>
-          {notification}
+          {notification.message}
         </div>
       }
     </>
