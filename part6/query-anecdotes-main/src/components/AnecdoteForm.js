@@ -10,6 +10,12 @@ const AnecdoteForm = () => {
     onSuccess: (newAncedote) => {
       const anecdotes = queryClient.getQueryData('anecdotes')
       queryClient.setQueryData('anecdotes', [...anecdotes, newAncedote])
+    },
+    onError: (error) => {
+      dispatch({ type: "SET", payload: "too short anecdote, must have length 5 or more" });
+      setTimeout(() => {
+        dispatch({ type: "REMOVE" });
+      }, 5000)
     }
   })
 
